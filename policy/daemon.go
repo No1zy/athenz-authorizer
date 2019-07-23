@@ -190,12 +190,14 @@ func (p *policyd) CheckPolicy(ctx context.Context, domain string, roles []string
 	defer cancel()
 
 	go func() {
+		defer glg.Debugf("I am going to dead.")
 		defer close(ech)
 		wg := new(sync.WaitGroup)
 		for _, role := range roles {
 			dr := fmt.Sprintf("%s:role.%s", domain, role)
 			wg.Add(1)
 			go func(ch chan<- error) {
+				defer glg.Debugf("wg.Done()")
 				defer wg.Done()
 				select {
 				case <-cctx.Done():
