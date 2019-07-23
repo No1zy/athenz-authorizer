@@ -1,0 +1,120 @@
+=== RUN   TestTest_policyd_CheckPolicy
+=== RUN   TestTest_policyd_CheckPolicy/check_policy:_control_test
+[34m2019-07-23 13:38:50	[DEBG]:	wg.Done()[39m
+[34m2019-07-23 13:38:50	[DEBG]:	wg.Done()[39m
+[34m2019-07-23 13:38:50	[DEBG]:	wg.Done()[39m
+[34m2019-07-23 13:38:50	[DEBG]:	Checking policy domain: domain, role: [role1 role2 role3 role4], action: action, resource: resource, assertion: &{domain ^action-resource$ policy deny: Access Check was explicitly denied action resource ^action-resource$}[39m
+[34m2019-07-23 13:38:50	[DEBG]:	wg.Done()[39m
+[34m2019-07-23 13:38:50	[DEBG]:	check policy domain: domain, role: [role1 role2 role3 role4], action: action, resource: resource, result: policy deny: Access Check was explicitly denied[39m
+[34m2019-07-23 13:38:50	[DEBG]:	I am going to dead.[39m
+=== RUN   TestTest_policyd_CheckPolicy/check_policy_multiple_deny_deadlock
+[34m2019-07-23 13:38:51	[DEBG]:	Checking policy domain: domain, role: [role1 role2 role3 role4], action: action, resource: resource, assertion: &{domain ^action-resource$ policy deny: Access Check was explicitly denied action resource ^action-resource$}[39m
+[34m2019-07-23 13:38:51	[DEBG]:	Checking policy domain: domain, role: [role1 role2 role3 role4], action: action, resource: resource, assertion: &{domain ^action-resource$ policy deny: Access Check was explicitly denied action resource ^action-resource$}[39m
+[34m2019-07-23 13:38:51	[DEBG]:	Checking policy domain: domain, role: [role1 role2 role3 role4], action: action, resource: resource, assertion: &{domain ^action-resource$ policy deny: Access Check was explicitly denied action resource ^action-resource$}[39m
+[34m2019-07-23 13:38:51	[DEBG]:	check policy domain: domain, role: [role1 role2 role3 role4], action: action, resource: resource, result: policy deny: Access Check was explicitly denied[39m
+[34m2019-07-23 13:38:51	[DEBG]:	Checking policy domain: domain, role: [role1 role2 role3 role4], action: action, resource: resource, assertion: &{domain ^action-resource$ policy deny: Access Check was explicitly denied action resource ^action-resource$}[39m
+[34m2019-07-23 13:38:51	[DEBG]:	wg.Done()[39m
+[34m2019-07-23 13:38:51	[DEBG]:	wg.Done()[39m
+--- FAIL: TestTest_policyd_CheckPolicy (2.01s)
+    --- FAIL: TestTest_policyd_CheckPolicy/check_policy:_control_test (1.00s)
+        daemon__test.go:161: go routine leak:
+            goroutine 19 [running]:
+            github.com/yahoojapan/athenz-authorizer/policy.TestTest_policyd_CheckPolicy.func3(0xc0001f8300)
+            	/Users/wfan/Desktop/dev/oss/athenz-authorizer/policy/daemon__test.go:158 +0x2f5
+            testing.tRunner(0xc0001f8300, 0xc00006a1e0)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:865 +0xc0
+            created by testing.(*T).Run
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:916 +0x35a
+            
+            goroutine 1 [chan receive]:
+            testing.(*T).Run(0xc0001f8100, 0x14c262d, 0x1c, 0x14d8350, 0x107b601)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:917 +0x381
+            testing.runTests.func1(0xc0001f8000)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:1157 +0x78
+            testing.tRunner(0xc0001f8000, 0xc0000e1e30)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:865 +0xc0
+            testing.runTests(0xc00000e040, 0x1857f60, 0x14, 0x14, 0x0)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:1155 +0x2a9
+            testing.(*M).Run(0xc000184400, 0x0)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:1072 +0x162
+            main.main()
+            	_testmain.go:80 +0x13e
+            
+            goroutine 18 [chan receive]:
+            github.com/kpango/fastime.(*Fastime).StartTimerD.func1(0xc0000f4230, 0x4c4b40, 0x155b0a0, 0xc00013e000)
+            	/Users/wfan/go/pkg/mod/github.com/kpango/fastime@v1.0.15/fastime.go:194 +0x19b
+            created by github.com/kpango/fastime.(*Fastime).StartTimerD
+            	/Users/wfan/go/pkg/mod/github.com/kpango/fastime@v1.0.15/fastime.go:179 +0xe2
+            
+            goroutine 5 [chan receive]:
+            testing.(*T).Run(0xc0001f8300, 0x14c17a6, 0x1a, 0xc00006a1e0, 0xe)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:917 +0x381
+            github.com/yahoojapan/athenz-authorizer/policy.TestTest_policyd_CheckPolicy(0xc0001f8100)
+            	/Users/wfan/Desktop/dev/oss/athenz-authorizer/policy/daemon__test.go:125 +0x41e
+            testing.tRunner(0xc0001f8100, 0x14d8350)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:865 +0xc0
+            created by testing.(*T).Run
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:916 +0x35a
+    --- FAIL: TestTest_policyd_CheckPolicy/check_policy_multiple_deny_deadlock (1.01s)
+        daemon__test.go:161: go routine leak:
+            goroutine 35 [running]:
+            github.com/yahoojapan/athenz-authorizer/policy.TestTest_policyd_CheckPolicy.func3(0xc00029e000)
+            	/Users/wfan/Desktop/dev/oss/athenz-authorizer/policy/daemon__test.go:158 +0x2f5
+            testing.tRunner(0xc00029e000, 0xc0000bdc30)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:865 +0xc0
+            created by testing.(*T).Run
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:916 +0x35a
+            
+            goroutine 1 [chan receive]:
+            testing.(*T).Run(0xc0001f8100, 0x14c262d, 0x1c, 0x14d8350, 0x107b601)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:917 +0x381
+            testing.runTests.func1(0xc0001f8000)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:1157 +0x78
+            testing.tRunner(0xc0001f8000, 0xc0000e1e30)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:865 +0xc0
+            testing.runTests(0xc00000e040, 0x1857f60, 0x14, 0x14, 0x0)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:1155 +0x2a9
+            testing.(*M).Run(0xc000184400, 0x0)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:1072 +0x162
+            main.main()
+            	_testmain.go:80 +0x13e
+            
+            goroutine 18 [select]:
+            github.com/kpango/fastime.(*Fastime).StartTimerD.func1(0xc0000f4230, 0x4c4b40, 0x155b0a0, 0xc00013e000)
+            	/Users/wfan/go/pkg/mod/github.com/kpango/fastime@v1.0.15/fastime.go:185 +0x167
+            created by github.com/kpango/fastime.(*Fastime).StartTimerD
+            	/Users/wfan/go/pkg/mod/github.com/kpango/fastime@v1.0.15/fastime.go:179 +0xe2
+            
+            goroutine 5 [chan receive]:
+            testing.(*T).Run(0xc00029e000, 0x14c6644, 0x23, 0xc0000bdc30, 0x0)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:917 +0x381
+            github.com/yahoojapan/athenz-authorizer/policy.TestTest_policyd_CheckPolicy(0xc0001f8100)
+            	/Users/wfan/Desktop/dev/oss/athenz-authorizer/policy/daemon__test.go:125 +0x41e
+            testing.tRunner(0xc0001f8100, 0x14d8350)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:865 +0xc0
+            created by testing.(*T).Run
+            	/usr/local/Cellar/go/1.12.6/libexec/src/testing/testing.go:916 +0x35a
+            
+            goroutine 36 [semacquire]:
+            sync.runtime_Semacquire(0xc0000ca4b8)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/runtime/sema.go:56 +0x39
+            sync.(*WaitGroup).Wait(0xc0000ca4b0)
+            	/usr/local/Cellar/go/1.12.6/libexec/src/sync/waitgroup.go:130 +0x65
+            github.com/yahoojapan/athenz-authorizer/policy.(*policyd).CheckPolicy.func1(0xc0000b8420, 0xc0000202c0, 0x4, 0x4, 0x14b991e, 0x6, 0x155b0a0, 0xc0000bbd40, 0xc0002a0000, 0x14b98e8, ...)
+            	/Users/wfan/Desktop/dev/oss/athenz-authorizer/policy/daemon.go:228 +0x32c
+            created by github.com/yahoojapan/athenz-authorizer/policy.(*policyd).CheckPolicy
+            	/Users/wfan/Desktop/dev/oss/athenz-authorizer/policy/daemon.go:192 +0x17a
+            
+            goroutine 37 [chan send]:
+            github.com/yahoojapan/athenz-authorizer/policy.(*policyd).CheckPolicy.func1.1(0xc0000ca4b0, 0x155b0a0, 0xc0000bbd40, 0xc0002a0000, 0xc0000f6a20, 0x11, 0x14b991e, 0x6, 0xc0000202c0, 0x4, ...)
+            	/Users/wfan/Desktop/dev/oss/athenz-authorizer/policy/daemon.go:220 +0x3dc
+            created by github.com/yahoojapan/athenz-authorizer/policy.(*policyd).CheckPolicy.func1
+            	/Users/wfan/Desktop/dev/oss/athenz-authorizer/policy/daemon.go:199 +0x2ff
+            
+            goroutine 39 [chan send]:
+            github.com/yahoojapan/athenz-authorizer/policy.(*policyd).CheckPolicy.func1.1(0xc0000ca4b0, 0x155b0a0, 0xc0000bbd40, 0xc0002a0000, 0xc0000f6a60, 0x11, 0x14b991e, 0x6, 0xc0000202c0, 0x4, ...)
+            	/Users/wfan/Desktop/dev/oss/athenz-authorizer/policy/daemon.go:216 +0x524
+            created by github.com/yahoojapan/athenz-authorizer/policy.(*policyd).CheckPolicy.func1
+            	/Users/wfan/Desktop/dev/oss/athenz-authorizer/policy/daemon.go:199 +0x2ff
+FAIL
+FAIL	github.com/yahoojapan/athenz-authorizer/policy	2.078s
